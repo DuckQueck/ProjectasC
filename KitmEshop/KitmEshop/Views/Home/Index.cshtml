@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@if (ViewBag.reviewAdded != null)
+{
+    <div class="alert alert-success" role="alert">
+        Thank you for a review
+    </div>
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome to Kitm Eshop</h1>
+</div>
+<div class="res"></div>
+
+<script>
+    (function () {
+        $.get("api/products", function (data) {
+            const result = JSON.parse(JSON.stringify(data)).$values
+            console.log(result)
+
+            for (var i = 0; i < result.length; i++) {
+
+                $(".res").append('<ul style="list-style-type: none; background-color:lightslategray"><li><img src="' + result[i].image + '" style="width:200px; height:150px"/></li><li>' + result[i].name + '</li><li>' + result[i].price + '</li><a href="Review/add/' + result[i].id + '" style="background-color:lightslategray;">Write a review</a></ul><ul id="' + result[i].id + '" style="list-style-type: none; background-color:lightslategray"></ul>');
+
+                for (var y = 0; y < result[i].reviews.$values.length; y++) {
+
+                    $("#" + result[i].id).append('<li>' + result[i].reviews.$values[y].reviewText + '</li>');
+                }
+            }
+        });
+    })();
+
+</script>

@@ -1,0 +1,13 @@
+﻿@model Domain.Review
+@using KitmEshop.Controllers
+@using KitmEshop.StringExtensions
+@using KitmEshop.Models
+
+
+<h1>Write a review to a product for @Model.Product?.Name</h1>
+
+<form asp-controller="@typeof(ReviewController).UrlName()" asp-action="@nameof(ReviewController.Add)" method="post">
+    <input asp-for="@Model.ReviewText" value="" placeholder="Please leave a comment"/>
+    <input type="hidden" asp-for="@Model.ProductId" value="@Model.Product.Id" />
+    <button type="submit">Add</button>
+</form>
